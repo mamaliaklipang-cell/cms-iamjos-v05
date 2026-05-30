@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { getSiteSettings, getMenu } from "@/lib/cms/public.functions";
 import { SiteHeader, SiteFooter } from "@/components/site/site-chrome";
+import { useCart, formatIDR } from "@/lib/cart";
+import { toast } from "sonner";
 import {
   GraduationCap,
   FileCheck2,
@@ -8,6 +10,7 @@ import {
   BookOpenCheck,
   Users2,
   Headphones,
+  ShoppingCart,
 } from "lucide-react";
 
 const SERVICES = [
@@ -15,37 +18,43 @@ const SERVICES = [
     icon: GraduationCap,
     title: "Pendampingan Akreditasi SINTA",
     desc: "Konsultasi & pendampingan menuju SINTA 1–6: kelengkapan dokumen, evaluasi diri, hingga submission ARJUNA.",
-    price: "Mulai Rp 5.000.000",
+    price: 5_000_000,
+    priceLabel: "Mulai Rp 5.000.000",
   },
   {
     icon: FileCheck2,
     title: "Setup DOI & Crossref",
     desc: "Registrasi prefix DOI, deposit metadata Crossref, plugin OJS, dan QA per artikel terbitan.",
-    price: "Mulai Rp 2.500.000",
+    price: 2_500_000,
+    priceLabel: "Mulai Rp 2.500.000",
   },
   {
     icon: Globe2,
     title: "Indeksasi Scopus & Scholar",
     desc: "Audit kepatuhan, perbaikan metadata, sitasi, hingga pendampingan submission indeksasi global.",
-    price: "Mulai Rp 7.500.000",
+    price: 7_500_000,
+    priceLabel: "Mulai Rp 7.500.000",
   },
   {
     icon: BookOpenCheck,
     title: "Migrasi OJS 2 ke OJS 3",
     desc: "Migrasi data jurnal lama ke OJS 3 terbaru tanpa kehilangan riwayat artikel, user, dan issue.",
-    price: "Mulai Rp 3.000.000",
+    price: 3_000_000,
+    priceLabel: "Mulai Rp 3.000.000",
   },
   {
     icon: Users2,
     title: "Pelatihan Editor & Reviewer",
     desc: "Workshop online/onsite untuk tim editorial: workflow OJS, ethics, plagiarism, copyediting.",
-    price: "Mulai Rp 4.000.000",
+    price: 4_000_000,
+    priceLabel: "Mulai Rp 4.000.000",
   },
   {
     icon: Headphones,
     title: "Support Tahunan",
     desc: "Maintenance, update OJS, backup terjadwal, monitoring uptime, dan technical support prioritas.",
-    price: "Mulai Rp 6.000.000 / tahun",
+    price: 6_000_000,
+    priceLabel: "Mulai Rp 6.000.000 / tahun",
   },
 ];
 
@@ -82,6 +91,7 @@ export const Route = createFileRoute("/services")({
 
 function ServicesPage() {
   const { settings, header, footer } = Route.useLoaderData();
+  const { add } = useCart();
   return (
     <div className="min-h-screen">
       <SiteHeader
@@ -123,12 +133,22 @@ function ServicesPage() {
                   {s.desc}
                 </p>
                 <div className="mt-6 flex items-end justify-between border-t border-border pt-4">
-                  <p className="text-base font-bold text-primary">{s.price}</p>
+                  <p className="text-base font-bold text-primary">{s.priceLabel}</p>
                   <Link
-                    to="/admin"
+                    to="/cart"
+                    onClick={() => {
+                      add({
+                        id: `service:${s.title}`,
+                        category: "service",
+                        name: s.title,
+                        description: s.desc,
+                        unitPrice: s.price,
+                      });
+                      toast.success(`${s.title} ditambahkan ke keranjang`);
+                    }}
                     className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
                   >
-                    Konsultasi
+                    <span className="inline-flex items-center gap-1.5"><ShoppingCart className="h-3.5 w-3.5" /> Pesan</span>
                   </Link>
                 </div>
               </article>

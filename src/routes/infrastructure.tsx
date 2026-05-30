@@ -1,7 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { getSiteSettings, getMenu } from "@/lib/cms/public.functions";
 import { SiteHeader, SiteFooter } from "@/components/site/site-chrome";
-import { Server, Globe, ShieldCheck, Cpu, HardDrive, Mail } from "lucide-react";
+import { Server, Globe, ShieldCheck, Cpu, HardDrive, Mail, ShoppingCart } from "lucide-react";
+import { useCart } from "@/lib/cart";
+import { toast } from "sonner";
 
 const PLANS = [
   {
@@ -9,7 +11,8 @@ const PLANS = [
     name: "VPS Starter",
     spec: "2 vCPU · 4 GB RAM · 80 GB SSD",
     desc: "Cocok untuk 1–2 rumah jurnal aktif dengan traffic moderat.",
-    price: "Rp 350.000",
+    price: 350_000,
+    priceLabel: "Rp 350.000",
     period: "/ bulan",
     highlight: false,
   },
@@ -18,7 +21,8 @@ const PLANS = [
     name: "VPS Professional",
     spec: "4 vCPU · 8 GB RAM · 160 GB SSD",
     desc: "Direkomendasikan untuk 3–6 rumah jurnal dengan trafik tinggi.",
-    price: "Rp 750.000",
+    price: 750_000,
+    priceLabel: "Rp 750.000",
     period: "/ bulan",
     highlight: true,
   },
@@ -27,7 +31,8 @@ const PLANS = [
     name: "VPS Enterprise",
     spec: "8 vCPU · 16 GB RAM · 320 GB SSD",
     desc: "Untuk konsorsium jurnal universitas dengan banyak instance OJS.",
-    price: "Rp 1.500.000",
+    price: 1_500_000,
+    priceLabel: "Rp 1.500.000",
     period: "/ bulan",
     highlight: false,
   },
@@ -87,6 +92,7 @@ export const Route = createFileRoute("/infrastructure")({
 
 function InfraPage() {
   const { settings, header, footer } = Route.useLoaderData();
+  const { add } = useCart();
   return (
     <div className="min-h-screen">
       <SiteHeader
@@ -140,14 +146,24 @@ function InfraPage() {
                 <p className="mt-2 flex-1 text-sm text-muted-foreground">{p.desc}</p>
                 <div className="mt-6 flex items-end justify-between border-t border-border pt-4">
                   <div>
-                    <p className="text-2xl font-bold text-primary">{p.price}</p>
+                    <p className="text-2xl font-bold text-primary">{p.priceLabel}</p>
                     <p className="text-xs text-muted-foreground">{p.period}</p>
                   </div>
                   <Link
-                    to="/admin"
+                    to="/cart"
+                    onClick={() => {
+                      add({
+                        id: `infra:${p.name}`,
+                        category: "infrastructure",
+                        name: p.name,
+                        description: `${p.spec} · ${p.period}`,
+                        unitPrice: p.price,
+                      });
+                      toast.success(`${p.name} ditambahkan ke keranjang`);
+                    }}
                     className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
                   >
-                    Pilih
+                    <span className="inline-flex items-center gap-1.5"><ShoppingCart className="h-3.5 w-3.5" /> Pesan</span>
                   </Link>
                 </div>
               </article>

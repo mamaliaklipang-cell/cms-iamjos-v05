@@ -1,6 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { getSiteSettings, getMenu } from "@/lib/cms/public.functions";
 import { SiteHeader, SiteFooter } from "@/components/site/site-chrome";
+import { useCart, formatIDR } from "@/lib/cart";
+import { toast } from "sonner";
+import { ShoppingCart } from "lucide-react";
 import v01 from "@/assets/themes/iamjos-v01.jpg";
 import v02 from "@/assets/themes/iamjos-v02.jpg";
 import v03 from "@/assets/themes/iamjos-v03.jpg";
@@ -23,7 +26,8 @@ const THEMES = [
   { name: "IamJOS-v09", tagline: "Humanities", style: "Purple Literary", image: v09 },
 ];
 
-const PRICE_LABEL = "Rp 1.000.000";
+const PRICE_VALUE = 1_000_000;
+const PRICE_LABEL = formatIDR(PRICE_VALUE);
 
 export const Route = createFileRoute("/themes")({
   head: () => ({
@@ -49,6 +53,7 @@ export const Route = createFileRoute("/themes")({
 
 function ThemesPage() {
   const { settings, header, footer } = Route.useLoaderData();
+  const { add } = useCart();
   return (
     <div className="min-h-screen">
       <SiteHeader siteName={settings?.site_name ?? "IAMJOS-CMS"} logoUrl={settings?.logo_url} items={header.items} />
@@ -111,10 +116,21 @@ function ThemesPage() {
                       <p className="text-xl font-bold text-primary">{PRICE_LABEL}</p>
                     </div>
                     <Link
-                      to="/admin"
+                      to="/cart"
+                      onClick={() => {
+                        add({
+                          id: `theme:${t.name}`,
+                          category: "theme",
+                          name: t.name,
+                          description: `${t.tagline} · ${t.style}`,
+                          unitPrice: PRICE_VALUE,
+                          image: t.image,
+                        });
+                        toast.success(`${t.name} ditambahkan ke keranjang`);
+                      }}
                       className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
                     >
-                      Pesan
+                      <span className="inline-flex items-center gap-1.5"><ShoppingCart className="h-3.5 w-3.5" /> Pesan</span>
                     </Link>
                   </div>
                 </div>
