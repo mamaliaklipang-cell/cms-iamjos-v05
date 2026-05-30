@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ThemesRouteImport } from './routes/themes'
+import { Route as ServicesRouteImport } from './routes/services'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as SlugRouteImport } from './routes/$slug'
@@ -30,6 +31,11 @@ import { Route as AdminPagesIdRouteImport } from './routes/admin.pages.$id'
 const ThemesRoute = ThemesRouteImport.update({
   id: '/themes',
   path: '/themes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -118,6 +124,7 @@ export interface FileRoutesByFullPath {
   '/$slug': typeof SlugRoute
   '/admin': typeof AdminRouteWithChildren
   '/login': typeof LoginRoute
+  '/services': typeof ServicesRoute
   '/themes': typeof ThemesRoute
   '/admin/appearance': typeof AdminAppearanceRoute
   '/admin/home-builder': typeof AdminHomeBuilderRoute
@@ -136,6 +143,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$slug': typeof SlugRoute
   '/login': typeof LoginRoute
+  '/services': typeof ServicesRoute
   '/themes': typeof ThemesRoute
   '/admin/appearance': typeof AdminAppearanceRoute
   '/admin/home-builder': typeof AdminHomeBuilderRoute
@@ -156,6 +164,7 @@ export interface FileRoutesById {
   '/$slug': typeof SlugRoute
   '/admin': typeof AdminRouteWithChildren
   '/login': typeof LoginRoute
+  '/services': typeof ServicesRoute
   '/themes': typeof ThemesRoute
   '/admin/appearance': typeof AdminAppearanceRoute
   '/admin/home-builder': typeof AdminHomeBuilderRoute
@@ -177,6 +186,7 @@ export interface FileRouteTypes {
     | '/$slug'
     | '/admin'
     | '/login'
+    | '/services'
     | '/themes'
     | '/admin/appearance'
     | '/admin/home-builder'
@@ -195,6 +205,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$slug'
     | '/login'
+    | '/services'
     | '/themes'
     | '/admin/appearance'
     | '/admin/home-builder'
@@ -214,6 +225,7 @@ export interface FileRouteTypes {
     | '/$slug'
     | '/admin'
     | '/login'
+    | '/services'
     | '/themes'
     | '/admin/appearance'
     | '/admin/home-builder'
@@ -234,6 +246,7 @@ export interface RootRouteChildren {
   SlugRoute: typeof SlugRoute
   AdminRoute: typeof AdminRouteWithChildren
   LoginRoute: typeof LoginRoute
+  ServicesRoute: typeof ServicesRoute
   ThemesRoute: typeof ThemesRoute
   BlogSlugRoute: typeof BlogSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
@@ -246,6 +259,13 @@ declare module '@tanstack/react-router' {
       path: '/themes'
       fullPath: '/themes'
       preLoaderRoute: typeof ThemesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -416,6 +436,7 @@ const rootRouteChildren: RootRouteChildren = {
   SlugRoute: SlugRoute,
   AdminRoute: AdminRouteWithChildren,
   LoginRoute: LoginRoute,
+  ServicesRoute: ServicesRoute,
   ThemesRoute: ThemesRoute,
   BlogSlugRoute: BlogSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
@@ -423,3 +444,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
