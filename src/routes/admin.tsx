@@ -55,7 +55,7 @@ function AdminLayout() {
           <Link to="/" className="flex items-center gap-2.5">
             <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-primary text-sm font-bold text-primary-foreground shadow-elegant">L</span>
             <div>
-              <div className="text-sm font-bold tracking-tight">Lumen CMS</div>
+              <div className="text-sm font-bold tracking-tight">IAMJOS-CMS</div>
               <div className="text-[11px] text-muted-foreground">Admin Panel</div>
             </div>
           </Link>
