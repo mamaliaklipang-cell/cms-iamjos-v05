@@ -73,11 +73,13 @@ function Features(p: any) {
           <div key={i} className="group relative overflow-hidden rounded-2xl border border-border bg-card p-7 shadow-soft transition-all hover:-translate-y-1 hover:shadow-elegant">
             <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-gradient-primary opacity-0 blur-2xl transition-opacity group-hover:opacity-20" aria-hidden />
             <div className="relative">
-              <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-primary text-primary-foreground shadow-soft">
-                <Sparkles className="h-5 w-5" />
+              <div className="flex items-center gap-3">
+                <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-primary text-primary-foreground shadow-soft">
+                  <Sparkles className="h-5 w-5" />
+                </div>
+                <h3 className="text-lg font-semibold">{it.title}</h3>
               </div>
-              <h3 className="text-lg font-semibold">{it.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{it.description}</p>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{it.description}</p>
             </div>
           </div>
         ))}
