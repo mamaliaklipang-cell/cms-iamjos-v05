@@ -50,7 +50,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       meta: [
         { charSet: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { title: s?.site_name ?? "Lumen CMS" },
+        { title: s?.site_name ?? "IAMJOS-CMS" },
         { name: "description", content: s?.tagline ?? "Modern Content Management System" },
         { title: "CMS IAMJOS" },
         { property: "og:title", content: "CMS IAMJOS" },
