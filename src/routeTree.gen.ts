@@ -16,6 +16,15 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AdminPostsRouteImport } from './routes/admin.posts'
+import { Route as AdminPagesRouteImport } from './routes/admin.pages'
+import { Route as AdminMenusRouteImport } from './routes/admin.menus'
+import { Route as AdminMediaRouteImport } from './routes/admin.media'
+import { Route as AdminHomeBuilderRouteImport } from './routes/admin.home-builder'
+import { Route as AdminAppearanceRouteImport } from './routes/admin.appearance'
+import { Route as AdminPostsIdRouteImport } from './routes/admin.posts.$id'
+import { Route as AdminPagesIdRouteImport } from './routes/admin.pages.$id'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -52,23 +61,86 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPostsRoute = AdminPostsRouteImport.update({
+  id: '/posts',
+  path: '/posts',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPagesRoute = AdminPagesRouteImport.update({
+  id: '/pages',
+  path: '/pages',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminMenusRoute = AdminMenusRouteImport.update({
+  id: '/menus',
+  path: '/menus',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminMediaRoute = AdminMediaRouteImport.update({
+  id: '/media',
+  path: '/media',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminHomeBuilderRoute = AdminHomeBuilderRouteImport.update({
+  id: '/home-builder',
+  path: '/home-builder',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAppearanceRoute = AdminAppearanceRouteImport.update({
+  id: '/appearance',
+  path: '/appearance',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPostsIdRoute = AdminPostsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AdminPostsRoute,
+} as any)
+const AdminPagesIdRoute = AdminPagesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AdminPagesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$slug': typeof SlugRoute
   '/admin': typeof AdminRouteWithChildren
   '/login': typeof LoginRoute
+  '/admin/appearance': typeof AdminAppearanceRoute
+  '/admin/home-builder': typeof AdminHomeBuilderRoute
+  '/admin/media': typeof AdminMediaRoute
+  '/admin/menus': typeof AdminMenusRoute
+  '/admin/pages': typeof AdminPagesRouteWithChildren
+  '/admin/posts': typeof AdminPostsRouteWithChildren
+  '/admin/users': typeof AdminUsersRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
+  '/admin/pages/$id': typeof AdminPagesIdRoute
+  '/admin/posts/$id': typeof AdminPostsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$slug': typeof SlugRoute
   '/login': typeof LoginRoute
+  '/admin/appearance': typeof AdminAppearanceRoute
+  '/admin/home-builder': typeof AdminHomeBuilderRoute
+  '/admin/media': typeof AdminMediaRoute
+  '/admin/menus': typeof AdminMenusRoute
+  '/admin/pages': typeof AdminPagesRouteWithChildren
+  '/admin/posts': typeof AdminPostsRouteWithChildren
+  '/admin/users': typeof AdminUsersRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/admin': typeof AdminIndexRoute
   '/blog': typeof BlogIndexRoute
+  '/admin/pages/$id': typeof AdminPagesIdRoute
+  '/admin/posts/$id': typeof AdminPostsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -76,9 +148,18 @@ export interface FileRoutesById {
   '/$slug': typeof SlugRoute
   '/admin': typeof AdminRouteWithChildren
   '/login': typeof LoginRoute
+  '/admin/appearance': typeof AdminAppearanceRoute
+  '/admin/home-builder': typeof AdminHomeBuilderRoute
+  '/admin/media': typeof AdminMediaRoute
+  '/admin/menus': typeof AdminMenusRoute
+  '/admin/pages': typeof AdminPagesRouteWithChildren
+  '/admin/posts': typeof AdminPostsRouteWithChildren
+  '/admin/users': typeof AdminUsersRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
+  '/admin/pages/$id': typeof AdminPagesIdRoute
+  '/admin/posts/$id': typeof AdminPostsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -87,20 +168,53 @@ export interface FileRouteTypes {
     | '/$slug'
     | '/admin'
     | '/login'
+    | '/admin/appearance'
+    | '/admin/home-builder'
+    | '/admin/media'
+    | '/admin/menus'
+    | '/admin/pages'
+    | '/admin/posts'
+    | '/admin/users'
     | '/blog/$slug'
     | '/admin/'
     | '/blog/'
+    | '/admin/pages/$id'
+    | '/admin/posts/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$slug' | '/login' | '/blog/$slug' | '/admin' | '/blog'
+  to:
+    | '/'
+    | '/$slug'
+    | '/login'
+    | '/admin/appearance'
+    | '/admin/home-builder'
+    | '/admin/media'
+    | '/admin/menus'
+    | '/admin/pages'
+    | '/admin/posts'
+    | '/admin/users'
+    | '/blog/$slug'
+    | '/admin'
+    | '/blog'
+    | '/admin/pages/$id'
+    | '/admin/posts/$id'
   id:
     | '__root__'
     | '/'
     | '/$slug'
     | '/admin'
     | '/login'
+    | '/admin/appearance'
+    | '/admin/home-builder'
+    | '/admin/media'
+    | '/admin/menus'
+    | '/admin/pages'
+    | '/admin/posts'
+    | '/admin/users'
     | '/blog/$slug'
     | '/admin/'
     | '/blog/'
+    | '/admin/pages/$id'
+    | '/admin/posts/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -163,14 +277,115 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/posts': {
+      id: '/admin/posts'
+      path: '/posts'
+      fullPath: '/admin/posts'
+      preLoaderRoute: typeof AdminPostsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/pages': {
+      id: '/admin/pages'
+      path: '/pages'
+      fullPath: '/admin/pages'
+      preLoaderRoute: typeof AdminPagesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/menus': {
+      id: '/admin/menus'
+      path: '/menus'
+      fullPath: '/admin/menus'
+      preLoaderRoute: typeof AdminMenusRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/media': {
+      id: '/admin/media'
+      path: '/media'
+      fullPath: '/admin/media'
+      preLoaderRoute: typeof AdminMediaRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/home-builder': {
+      id: '/admin/home-builder'
+      path: '/home-builder'
+      fullPath: '/admin/home-builder'
+      preLoaderRoute: typeof AdminHomeBuilderRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/appearance': {
+      id: '/admin/appearance'
+      path: '/appearance'
+      fullPath: '/admin/appearance'
+      preLoaderRoute: typeof AdminAppearanceRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/posts/$id': {
+      id: '/admin/posts/$id'
+      path: '/$id'
+      fullPath: '/admin/posts/$id'
+      preLoaderRoute: typeof AdminPostsIdRouteImport
+      parentRoute: typeof AdminPostsRoute
+    }
+    '/admin/pages/$id': {
+      id: '/admin/pages/$id'
+      path: '/$id'
+      fullPath: '/admin/pages/$id'
+      preLoaderRoute: typeof AdminPagesIdRouteImport
+      parentRoute: typeof AdminPagesRoute
+    }
   }
 }
 
+interface AdminPagesRouteChildren {
+  AdminPagesIdRoute: typeof AdminPagesIdRoute
+}
+
+const AdminPagesRouteChildren: AdminPagesRouteChildren = {
+  AdminPagesIdRoute: AdminPagesIdRoute,
+}
+
+const AdminPagesRouteWithChildren = AdminPagesRoute._addFileChildren(
+  AdminPagesRouteChildren,
+)
+
+interface AdminPostsRouteChildren {
+  AdminPostsIdRoute: typeof AdminPostsIdRoute
+}
+
+const AdminPostsRouteChildren: AdminPostsRouteChildren = {
+  AdminPostsIdRoute: AdminPostsIdRoute,
+}
+
+const AdminPostsRouteWithChildren = AdminPostsRoute._addFileChildren(
+  AdminPostsRouteChildren,
+)
+
 interface AdminRouteChildren {
+  AdminAppearanceRoute: typeof AdminAppearanceRoute
+  AdminHomeBuilderRoute: typeof AdminHomeBuilderRoute
+  AdminMediaRoute: typeof AdminMediaRoute
+  AdminMenusRoute: typeof AdminMenusRoute
+  AdminPagesRoute: typeof AdminPagesRouteWithChildren
+  AdminPostsRoute: typeof AdminPostsRouteWithChildren
+  AdminUsersRoute: typeof AdminUsersRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminAppearanceRoute: AdminAppearanceRoute,
+  AdminHomeBuilderRoute: AdminHomeBuilderRoute,
+  AdminMediaRoute: AdminMediaRoute,
+  AdminMenusRoute: AdminMenusRoute,
+  AdminPagesRoute: AdminPagesRouteWithChildren,
+  AdminPostsRoute: AdminPostsRouteWithChildren,
+  AdminUsersRoute: AdminUsersRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
