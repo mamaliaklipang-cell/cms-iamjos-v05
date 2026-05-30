@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowUpRight, ShoppingCart } from "lucide-react";
+import { ArrowUpRight, ShoppingCart, Mail, MapPin, Phone, Twitter, Linkedin, Github, Sparkles } from "lucide-react";
 import { useCart } from "@/lib/cart";
 
 type Item = { id: string; label: string; url: string | null };
