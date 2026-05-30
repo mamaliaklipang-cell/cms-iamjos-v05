@@ -106,21 +106,21 @@ function CheckoutPage() {
             <div className="space-y-5 rounded-2xl border border-border bg-card p-6">
               <h2 className="text-lg font-bold">Data Pemesan</h2>
               <Field label="Nama Lengkap *">
-                <input required value={form.customer_name} onChange={(e) => setForm({ ...form, customer_name: e.target.value })} className="input" />
+                <input required value={form.customer_name} onChange={(e) => setForm({ ...form, customer_name: e.target.value })} className={INPUT} />
               </Field>
               <div className="grid gap-5 md:grid-cols-2">
                 <Field label="Email *">
-                  <input required type="email" value={form.customer_email} onChange={(e) => setForm({ ...form, customer_email: e.target.value })} className="input" />
+                  <input required type="email" value={form.customer_email} onChange={(e) => setForm({ ...form, customer_email: e.target.value })} className={INPUT} />
                 </Field>
                 <Field label="No. WhatsApp *">
-                  <input required value={form.customer_phone} onChange={(e) => setForm({ ...form, customer_phone: e.target.value })} className="input" placeholder="08xxxxxxxxxx" />
+                  <input required value={form.customer_phone} onChange={(e) => setForm({ ...form, customer_phone: e.target.value })} className={INPUT} placeholder="08xxxxxxxxxx" />
                 </Field>
               </div>
               <Field label="Institusi / Universitas">
-                <input value={form.customer_institution} onChange={(e) => setForm({ ...form, customer_institution: e.target.value })} className="input" />
+                <input value={form.customer_institution} onChange={(e) => setForm({ ...form, customer_institution: e.target.value })} className={INPUT} />
               </Field>
               <Field label="Catatan Pesanan">
-                <textarea rows={4} value={form.customer_notes} onChange={(e) => setForm({ ...form, customer_notes: e.target.value })} className="input" placeholder="Nama jurnal, kebutuhan khusus, dst." />
+                <textarea rows={4} value={form.customer_notes} onChange={(e) => setForm({ ...form, customer_notes: e.target.value })} className={INPUT} placeholder="Nama jurnal, kebutuhan khusus, dst." />
               </Field>
             </div>
 
@@ -147,7 +147,6 @@ function CheckoutPage() {
               <p className="mt-3 text-center text-[11px] text-muted-foreground">Instruksi transfer & form bukti akan muncul setelah ini.</p>
             </aside>
 
-            <style>{`.input{display:block;width:100%;border-radius:0.5rem;border:1px solid hsl(var(--border));background:hsl(var(--background));padding:0.6rem 0.8rem;font-size:0.875rem;outline:none;}.input:focus{border-color:hsl(var(--primary));box-shadow:0 0 0 3px color-mix(in oklab, hsl(var(--primary)) 20%, transparent);}`}</style>
           </form>
         )}
       </main>
@@ -155,6 +154,8 @@ function CheckoutPage() {
     </div>
   );
 }
+
+const INPUT = "block w-full rounded-lg border border-border bg-background px-3 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/30";
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
