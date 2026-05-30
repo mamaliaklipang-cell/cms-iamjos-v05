@@ -67,7 +67,7 @@ function AdminLayout() {
               <div className="space-y-0.5">
                 {group.items.map((n) => {
                   const Icon = n.icon;
-                  const active = n.exact ? path === n.to : path.startsWith(n.to);
+                  const active = "exact" in n && n.exact ? path === n.to : path.startsWith(n.to);
                   return (
                     <Link
                       key={n.to}
