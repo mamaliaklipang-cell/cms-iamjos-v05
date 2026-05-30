@@ -13,6 +13,7 @@ import { Route as ThemesRouteImport } from './routes/themes'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as InfrastructureRouteImport } from './routes/infrastructure'
+import { Route as EventsRouteImport } from './routes/events'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -51,6 +52,11 @@ const LoginRoute = LoginRouteImport.update({
 const InfrastructureRoute = InfrastructureRouteImport.update({
   id: '/infrastructure',
   path: '/infrastructure',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventsRoute = EventsRouteImport.update({
+  id: '/events',
+  path: '/events',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CheckoutRoute = CheckoutRouteImport.update({
@@ -156,6 +162,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteWithChildren
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRouteWithChildren
+  '/events': typeof EventsRoute
   '/infrastructure': typeof InfrastructureRoute
   '/login': typeof LoginRoute
   '/services': typeof ServicesRoute
@@ -180,6 +187,7 @@ export interface FileRoutesByTo {
   '/$slug': typeof SlugRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRouteWithChildren
+  '/events': typeof EventsRoute
   '/infrastructure': typeof InfrastructureRoute
   '/login': typeof LoginRoute
   '/services': typeof ServicesRoute
@@ -206,6 +214,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRouteWithChildren
+  '/events': typeof EventsRoute
   '/infrastructure': typeof InfrastructureRoute
   '/login': typeof LoginRoute
   '/services': typeof ServicesRoute
@@ -233,6 +242,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/cart'
     | '/checkout'
+    | '/events'
     | '/infrastructure'
     | '/login'
     | '/services'
@@ -257,6 +267,7 @@ export interface FileRouteTypes {
     | '/$slug'
     | '/cart'
     | '/checkout'
+    | '/events'
     | '/infrastructure'
     | '/login'
     | '/services'
@@ -282,6 +293,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/cart'
     | '/checkout'
+    | '/events'
     | '/infrastructure'
     | '/login'
     | '/services'
@@ -308,6 +320,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   CartRoute: typeof CartRoute
   CheckoutRoute: typeof CheckoutRouteWithChildren
+  EventsRoute: typeof EventsRoute
   InfrastructureRoute: typeof InfrastructureRoute
   LoginRoute: typeof LoginRoute
   ServicesRoute: typeof ServicesRoute
@@ -344,6 +357,13 @@ declare module '@tanstack/react-router' {
       path: '/infrastructure'
       fullPath: '/infrastructure'
       preLoaderRoute: typeof InfrastructureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/events': {
+      id: '/events'
+      path: '/events'
+      fullPath: '/events'
+      preLoaderRoute: typeof EventsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/checkout': {
@@ -550,6 +570,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRouteWithChildren,
   CartRoute: CartRoute,
   CheckoutRoute: CheckoutRouteWithChildren,
+  EventsRoute: EventsRoute,
   InfrastructureRoute: InfrastructureRoute,
   LoginRoute: LoginRoute,
   ServicesRoute: ServicesRoute,
