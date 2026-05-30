@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ThemesRouteImport } from './routes/themes'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as SlugRouteImport } from './routes/$slug'
@@ -26,6 +27,11 @@ import { Route as AdminAppearanceRouteImport } from './routes/admin.appearance'
 import { Route as AdminPostsIdRouteImport } from './routes/admin.posts.$id'
 import { Route as AdminPagesIdRouteImport } from './routes/admin.pages.$id'
 
+const ThemesRoute = ThemesRouteImport.update({
+  id: '/themes',
+  path: '/themes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -112,6 +118,7 @@ export interface FileRoutesByFullPath {
   '/$slug': typeof SlugRoute
   '/admin': typeof AdminRouteWithChildren
   '/login': typeof LoginRoute
+  '/themes': typeof ThemesRoute
   '/admin/appearance': typeof AdminAppearanceRoute
   '/admin/home-builder': typeof AdminHomeBuilderRoute
   '/admin/media': typeof AdminMediaRoute
@@ -129,6 +136,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$slug': typeof SlugRoute
   '/login': typeof LoginRoute
+  '/themes': typeof ThemesRoute
   '/admin/appearance': typeof AdminAppearanceRoute
   '/admin/home-builder': typeof AdminHomeBuilderRoute
   '/admin/media': typeof AdminMediaRoute
@@ -148,6 +156,7 @@ export interface FileRoutesById {
   '/$slug': typeof SlugRoute
   '/admin': typeof AdminRouteWithChildren
   '/login': typeof LoginRoute
+  '/themes': typeof ThemesRoute
   '/admin/appearance': typeof AdminAppearanceRoute
   '/admin/home-builder': typeof AdminHomeBuilderRoute
   '/admin/media': typeof AdminMediaRoute
@@ -168,6 +177,7 @@ export interface FileRouteTypes {
     | '/$slug'
     | '/admin'
     | '/login'
+    | '/themes'
     | '/admin/appearance'
     | '/admin/home-builder'
     | '/admin/media'
@@ -185,6 +195,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$slug'
     | '/login'
+    | '/themes'
     | '/admin/appearance'
     | '/admin/home-builder'
     | '/admin/media'
@@ -203,6 +214,7 @@ export interface FileRouteTypes {
     | '/$slug'
     | '/admin'
     | '/login'
+    | '/themes'
     | '/admin/appearance'
     | '/admin/home-builder'
     | '/admin/media'
@@ -222,12 +234,20 @@ export interface RootRouteChildren {
   SlugRoute: typeof SlugRoute
   AdminRoute: typeof AdminRouteWithChildren
   LoginRoute: typeof LoginRoute
+  ThemesRoute: typeof ThemesRoute
   BlogSlugRoute: typeof BlogSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/themes': {
+      id: '/themes'
+      path: '/themes'
+      fullPath: '/themes'
+      preLoaderRoute: typeof ThemesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -396,6 +416,7 @@ const rootRouteChildren: RootRouteChildren = {
   SlugRoute: SlugRoute,
   AdminRoute: AdminRouteWithChildren,
   LoginRoute: LoginRoute,
+  ThemesRoute: ThemesRoute,
   BlogSlugRoute: BlogSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
 }
