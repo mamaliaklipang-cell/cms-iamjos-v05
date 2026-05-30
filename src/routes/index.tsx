@@ -26,7 +26,7 @@ function Home() {
       <main>
         <SectionRenderer sections={sections} heroDefault={settings?.hero_default ?? {}} posts={posts} />
       </main>
-      <SiteFooter items={footer.items} footerHtml={settings?.footer_html} />
+      <SiteFooter items={footer.items} footerHtml={settings?.footer_html} siteName={settings?.site_name ?? "IAMJOS-CMS"} tagline={settings?.tagline ?? undefined} socialLinks={settings?.social_links as Record<string, string> | null} />
     </div>
   );
 }
