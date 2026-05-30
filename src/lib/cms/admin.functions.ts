@@ -190,12 +190,12 @@ export const adminSaveHomeSections = createServerFn({ method: "POST" })
     await context.supabase.from("home_sections").delete().neq("id", "00000000-0000-0000-0000-000000000000");
     if (data.sections.length) {
       const rows = data.sections.map((s, i) => ({
-        type: s.type,
+        type: s.type as any,
         props: s.props,
         sort_order: i,
         is_visible: s.is_visible,
       }));
-      const { error } = await context.supabase.from("home_sections").insert(rows);
+      const { error } = await context.supabase.from("home_sections").insert(rows as any);
       if (error) throw new Error(error.message);
     }
     return { ok: true };
