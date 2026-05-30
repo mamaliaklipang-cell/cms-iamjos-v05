@@ -59,7 +59,7 @@ function ThemesPage() {
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
               Premium Themes · Rumah Jurnal
             </p>
-            <h1 className="mt-4 text-4xl font-bold tracking-tight md:text-6xl">
+            <h1 className="mt-4 text-2xl font-bold tracking-tight md:text-4xl">
               Pilihan Theme Premium <span className="text-primary">IamJOS</span>
             </h1>
             <p className="mt-5 max-w-2xl text-lg text-muted-foreground">
