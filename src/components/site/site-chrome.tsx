@@ -54,7 +54,7 @@ export function SiteHeader({ siteName, logoUrl, items }: { siteName: string; log
 export function SiteFooter({
   items,
   footerHtml,
-  siteName = "IAMJOS-CMS",
+  siteName = "IamJOS Engine",
   tagline = "Rumah Jurnal Premium & Pendampingan Indeksasi",
   socialLinks,
 }: {
@@ -116,9 +116,9 @@ export function SiteFooter({
           <div>
             <h4 className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">Kontak</h4>
             <ul className="mt-5 space-y-3 text-sm text-white/70">
-              <li className="flex items-start gap-3"><Mail className="mt-0.5 h-4 w-4 text-primary-glow" /> halo@iamjos-cms.id</li>
-              <li className="flex items-start gap-3"><Phone className="mt-0.5 h-4 w-4 text-primary-glow" /> +62 812-0000-1234</li>
-              <li className="flex items-start gap-3"><MapPin className="mt-0.5 h-4 w-4 text-primary-glow" /> Yogyakarta, Indonesia</li>
+              <li className="flex items-start gap-3"><Mail className="mt-0.5 h-4 w-4 text-primary-glow" /><span>halo@iamjos-engine.id</span></li>
+              <li className="flex items-start gap-3"><Phone className="mt-0.5 h-4 w-4 text-primary-glow" /><span>+62 812-0000-1234</span></li>
+              <li className="flex items-start gap-3"><MapPin className="mt-0.5 h-4 w-4 text-primary-glow" /><span>Yogyakarta, Indonesia</span></li>
             </ul>
             <div className="mt-6 flex gap-2.5">
               {[
