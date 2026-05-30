@@ -14,16 +14,443 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          slug: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          slug: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          slug?: string
+        }
+        Relationships: []
+      }
+      home_sections: {
+        Row: {
+          created_at: string
+          id: string
+          is_visible: boolean
+          props: Json
+          sort_order: number
+          type: Database["public"]["Enums"]["section_type"]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_visible?: boolean
+          props?: Json
+          sort_order?: number
+          type: Database["public"]["Enums"]["section_type"]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_visible?: boolean
+          props?: Json
+          sort_order?: number
+          type?: Database["public"]["Enums"]["section_type"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      media: {
+        Row: {
+          alt: string | null
+          created_at: string
+          height: number | null
+          id: string
+          mime_type: string | null
+          path: string
+          size: number | null
+          uploaded_by: string | null
+          url: string
+          width: number | null
+        }
+        Insert: {
+          alt?: string | null
+          created_at?: string
+          height?: number | null
+          id?: string
+          mime_type?: string | null
+          path: string
+          size?: number | null
+          uploaded_by?: string | null
+          url: string
+          width?: number | null
+        }
+        Update: {
+          alt?: string | null
+          created_at?: string
+          height?: number | null
+          id?: string
+          mime_type?: string | null
+          path?: string
+          size?: number | null
+          uploaded_by?: string | null
+          url?: string
+          width?: number | null
+        }
+        Relationships: []
+      }
+      menu_items: {
+        Row: {
+          created_at: string
+          id: string
+          label: string
+          menu_id: string
+          page_id: string | null
+          parent_id: string | null
+          sort_order: number
+          url: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          label: string
+          menu_id: string
+          page_id?: string | null
+          parent_id?: string | null
+          sort_order?: number
+          url?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          label?: string
+          menu_id?: string
+          page_id?: string | null
+          parent_id?: string | null
+          sort_order?: number
+          url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "menu_items_menu_id_fkey"
+            columns: ["menu_id"]
+            isOneToOne: false
+            referencedRelation: "menus"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "menu_items_page_id_fkey"
+            columns: ["page_id"]
+            isOneToOne: false
+            referencedRelation: "pages"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "menu_items_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "menu_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      menus: {
+        Row: {
+          created_at: string
+          id: string
+          location: Database["public"]["Enums"]["menu_location"]
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          location: Database["public"]["Enums"]["menu_location"]
+          name: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          location?: Database["public"]["Enums"]["menu_location"]
+          name?: string
+        }
+        Relationships: []
+      }
+      pages: {
+        Row: {
+          author_id: string | null
+          content: Json
+          created_at: string
+          id: string
+          og_image: string | null
+          published_at: string | null
+          seo_description: string | null
+          seo_title: string | null
+          slug: string
+          status: Database["public"]["Enums"]["content_status"]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author_id?: string | null
+          content?: Json
+          created_at?: string
+          id?: string
+          og_image?: string | null
+          published_at?: string | null
+          seo_description?: string | null
+          seo_title?: string | null
+          slug: string
+          status?: Database["public"]["Enums"]["content_status"]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string | null
+          content?: Json
+          created_at?: string
+          id?: string
+          og_image?: string | null
+          published_at?: string | null
+          seo_description?: string | null
+          seo_title?: string | null
+          slug?: string
+          status?: Database["public"]["Enums"]["content_status"]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      post_tags: {
+        Row: {
+          post_id: string
+          tag_id: string
+        }
+        Insert: {
+          post_id: string
+          tag_id: string
+        }
+        Update: {
+          post_id?: string
+          tag_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_tags_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "post_tags_tag_id_fkey"
+            columns: ["tag_id"]
+            isOneToOne: false
+            referencedRelation: "tags"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      posts: {
+        Row: {
+          author_id: string | null
+          category_id: string | null
+          content: Json
+          cover_image: string | null
+          created_at: string
+          excerpt: string | null
+          id: string
+          published_at: string | null
+          slug: string
+          status: Database["public"]["Enums"]["content_status"]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author_id?: string | null
+          category_id?: string | null
+          content?: Json
+          cover_image?: string | null
+          created_at?: string
+          excerpt?: string | null
+          id?: string
+          published_at?: string | null
+          slug: string
+          status?: Database["public"]["Enums"]["content_status"]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string | null
+          category_id?: string | null
+          content?: Json
+          cover_image?: string | null
+          created_at?: string
+          excerpt?: string | null
+          id?: string
+          published_at?: string | null
+          slug?: string
+          status?: Database["public"]["Enums"]["content_status"]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "posts_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          display_name: string | null
+          email: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          email?: string | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          email?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      site_settings: {
+        Row: {
+          favicon_url: string | null
+          font_family: Database["public"]["Enums"]["font_family"]
+          footer_html: string | null
+          hero_default: Json
+          id: number
+          logo_url: string | null
+          site_name: string
+          social_links: Json
+          tagline: string | null
+          updated_at: string
+        }
+        Insert: {
+          favicon_url?: string | null
+          font_family?: Database["public"]["Enums"]["font_family"]
+          footer_html?: string | null
+          hero_default?: Json
+          id?: number
+          logo_url?: string | null
+          site_name?: string
+          social_links?: Json
+          tagline?: string | null
+          updated_at?: string
+        }
+        Update: {
+          favicon_url?: string | null
+          font_family?: Database["public"]["Enums"]["font_family"]
+          footer_html?: string | null
+          hero_default?: Json
+          id?: number
+          logo_url?: string | null
+          site_name?: string
+          social_links?: Json
+          tagline?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      tags: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          slug: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          slug: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          slug?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_staff: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "editor" | "author" | "viewer"
+      content_status: "draft" | "published"
+      font_family:
+        | "Plus Jakarta Sans"
+        | "Inter"
+        | "Roboto"
+        | "Manrope"
+        | "Oswald"
+      menu_location: "header" | "footer"
+      section_type:
+        | "hero"
+        | "features"
+        | "cta"
+        | "gallery"
+        | "testimonials"
+        | "blog_list"
+        | "rich_text"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +577,26 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "editor", "author", "viewer"],
+      content_status: ["draft", "published"],
+      font_family: [
+        "Plus Jakarta Sans",
+        "Inter",
+        "Roboto",
+        "Manrope",
+        "Oswald",
+      ],
+      menu_location: ["header", "footer"],
+      section_type: [
+        "hero",
+        "features",
+        "cta",
+        "gallery",
+        "testimonials",
+        "blog_list",
+        "rich_text",
+      ],
+    },
   },
 } as const
