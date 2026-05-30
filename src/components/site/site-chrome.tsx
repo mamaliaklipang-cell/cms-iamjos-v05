@@ -1,9 +1,11 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ShoppingCart } from "lucide-react";
+import { useCart } from "@/lib/cart";
 
 type Item = { id: string; label: string; url: string | null };
 
 export function SiteHeader({ siteName, logoUrl, items }: { siteName: string; logoUrl?: string | null; items: Item[] }) {
+  const { count } = useCart();
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/70 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
@@ -25,6 +27,18 @@ export function SiteHeader({ siteName, logoUrl, items }: { siteName: string; log
           ))}
         </nav>
         <div className="flex items-center gap-2">
+          <Link
+            to="/cart"
+            aria-label="Keranjang"
+            className="relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-background text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <ShoppingCart className="h-4 w-4" />
+            {count > 0 && (
+              <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-primary-foreground">
+                {count}
+              </span>
+            )}
+          </Link>
           <Link to="/login" className="hidden text-sm font-medium text-muted-foreground hover:text-foreground md:inline-block">
             Sign in
           </Link>
