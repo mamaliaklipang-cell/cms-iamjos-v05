@@ -100,7 +100,7 @@ function InfraPage() {
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
               Infrastruktur · VPS & Domain
             </p>
-            <h1 className="mt-4 text-4xl font-bold tracking-tight md:text-6xl">
+            <h1 className="mt-4 text-2xl font-bold tracking-tight md:text-4xl">
               Infrastruktur <span className="text-primary">Terkelola</span> untuk
               Rumah Jurnal
             </h1>
