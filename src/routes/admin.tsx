@@ -2,7 +2,7 @@ import { createFileRoute, Outlet, Link, useNavigate, useRouterState } from "@tan
 import { useAuth } from "@/hooks/use-auth";
 import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { LayoutDashboard, FileText, Newspaper, Menu as MenuIcon, Image, Users, Blocks, Settings, LogOut, ExternalLink } from "lucide-react";
+import { LayoutDashboard, FileText, Newspaper, Menu as MenuIcon, Image, Users, Blocks, Settings, LogOut, ExternalLink, ShoppingBag } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({ component: AdminLayout });
 
@@ -17,6 +17,12 @@ const NAV_GROUPS = [
       { to: "/admin/pages", label: "Pages", icon: FileText },
       { to: "/admin/posts", label: "Blog / News", icon: Newspaper },
       { to: "/admin/media", label: "Media", icon: Image },
+    ],
+  },
+  {
+    label: "Commerce",
+    items: [
+      { to: "/admin/orders", label: "Pesanan", icon: ShoppingBag },
     ],
   },
   {
