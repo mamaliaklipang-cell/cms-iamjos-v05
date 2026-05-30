@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { formatIDR } from "@/lib/cart";
 import { toast } from "sonner";
 import { ExternalLink, RefreshCw } from "lucide-react";
@@ -100,8 +100,8 @@ function OrdersPage() {
                 const isOpen = open === o.id;
                 const statusInfo = STATUS_OPTIONS.find((s) => s.value === o.status);
                 return (
-                  <>
-                    <tr key={o.id} className="border-b border-border last:border-0 hover:bg-accent/30">
+                  <Fragment key={o.id}>
+                    <tr className="border-b border-border last:border-0 hover:bg-accent/30">
                       <td className="px-4 py-3 font-mono text-xs font-semibold">{o.order_number}</td>
                       <td className="px-4 py-3">
                         <div className="font-medium">{o.customer_name}</div>
@@ -180,7 +180,7 @@ function OrdersPage() {
                         </td>
                       </tr>
                     )}
-                  </>
+                  </Fragment>
                 );
               })}
             </tbody>

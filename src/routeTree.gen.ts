@@ -13,6 +13,8 @@ import { Route as ThemesRouteImport } from './routes/themes'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as InfrastructureRouteImport } from './routes/infrastructure'
+import { Route as CheckoutRouteImport } from './routes/checkout'
+import { Route as CartRouteImport } from './routes/cart'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as SlugRouteImport } from './routes/$slug'
 import { Route as IndexRouteImport } from './routes/index'
@@ -22,10 +24,12 @@ import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as AdminPostsRouteImport } from './routes/admin.posts'
 import { Route as AdminPagesRouteImport } from './routes/admin.pages'
+import { Route as AdminOrdersRouteImport } from './routes/admin.orders'
 import { Route as AdminMenusRouteImport } from './routes/admin.menus'
 import { Route as AdminMediaRouteImport } from './routes/admin.media'
 import { Route as AdminHomeBuilderRouteImport } from './routes/admin.home-builder'
 import { Route as AdminAppearanceRouteImport } from './routes/admin.appearance'
+import { Route as CheckoutSuccessOrderNumberRouteImport } from './routes/checkout.success.$orderNumber'
 import { Route as AdminPostsIdRouteImport } from './routes/admin.posts.$id'
 import { Route as AdminPagesIdRouteImport } from './routes/admin.pages.$id'
 
@@ -47,6 +51,16 @@ const LoginRoute = LoginRouteImport.update({
 const InfrastructureRoute = InfrastructureRouteImport.update({
   id: '/infrastructure',
   path: '/infrastructure',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CartRoute = CartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -94,6 +108,11 @@ const AdminPagesRoute = AdminPagesRouteImport.update({
   path: '/pages',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminOrdersRoute = AdminOrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminMenusRoute = AdminMenusRouteImport.update({
   id: '/menus',
   path: '/menus',
@@ -114,6 +133,12 @@ const AdminAppearanceRoute = AdminAppearanceRouteImport.update({
   path: '/appearance',
   getParentRoute: () => AdminRoute,
 } as any)
+const CheckoutSuccessOrderNumberRoute =
+  CheckoutSuccessOrderNumberRouteImport.update({
+    id: '/success/$orderNumber',
+    path: '/success/$orderNumber',
+    getParentRoute: () => CheckoutRoute,
+  } as any)
 const AdminPostsIdRoute = AdminPostsIdRouteImport.update({
   id: '/$id',
   path: '/$id',
@@ -129,6 +154,8 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$slug': typeof SlugRoute
   '/admin': typeof AdminRouteWithChildren
+  '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRouteWithChildren
   '/infrastructure': typeof InfrastructureRoute
   '/login': typeof LoginRoute
   '/services': typeof ServicesRoute
@@ -137,6 +164,7 @@ export interface FileRoutesByFullPath {
   '/admin/home-builder': typeof AdminHomeBuilderRoute
   '/admin/media': typeof AdminMediaRoute
   '/admin/menus': typeof AdminMenusRoute
+  '/admin/orders': typeof AdminOrdersRoute
   '/admin/pages': typeof AdminPagesRouteWithChildren
   '/admin/posts': typeof AdminPostsRouteWithChildren
   '/admin/users': typeof AdminUsersRoute
@@ -145,10 +173,13 @@ export interface FileRoutesByFullPath {
   '/blog/': typeof BlogIndexRoute
   '/admin/pages/$id': typeof AdminPagesIdRoute
   '/admin/posts/$id': typeof AdminPostsIdRoute
+  '/checkout/success/$orderNumber': typeof CheckoutSuccessOrderNumberRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$slug': typeof SlugRoute
+  '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRouteWithChildren
   '/infrastructure': typeof InfrastructureRoute
   '/login': typeof LoginRoute
   '/services': typeof ServicesRoute
@@ -157,6 +188,7 @@ export interface FileRoutesByTo {
   '/admin/home-builder': typeof AdminHomeBuilderRoute
   '/admin/media': typeof AdminMediaRoute
   '/admin/menus': typeof AdminMenusRoute
+  '/admin/orders': typeof AdminOrdersRoute
   '/admin/pages': typeof AdminPagesRouteWithChildren
   '/admin/posts': typeof AdminPostsRouteWithChildren
   '/admin/users': typeof AdminUsersRoute
@@ -165,12 +197,15 @@ export interface FileRoutesByTo {
   '/blog': typeof BlogIndexRoute
   '/admin/pages/$id': typeof AdminPagesIdRoute
   '/admin/posts/$id': typeof AdminPostsIdRoute
+  '/checkout/success/$orderNumber': typeof CheckoutSuccessOrderNumberRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$slug': typeof SlugRoute
   '/admin': typeof AdminRouteWithChildren
+  '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRouteWithChildren
   '/infrastructure': typeof InfrastructureRoute
   '/login': typeof LoginRoute
   '/services': typeof ServicesRoute
@@ -179,6 +214,7 @@ export interface FileRoutesById {
   '/admin/home-builder': typeof AdminHomeBuilderRoute
   '/admin/media': typeof AdminMediaRoute
   '/admin/menus': typeof AdminMenusRoute
+  '/admin/orders': typeof AdminOrdersRoute
   '/admin/pages': typeof AdminPagesRouteWithChildren
   '/admin/posts': typeof AdminPostsRouteWithChildren
   '/admin/users': typeof AdminUsersRoute
@@ -187,6 +223,7 @@ export interface FileRoutesById {
   '/blog/': typeof BlogIndexRoute
   '/admin/pages/$id': typeof AdminPagesIdRoute
   '/admin/posts/$id': typeof AdminPostsIdRoute
+  '/checkout/success/$orderNumber': typeof CheckoutSuccessOrderNumberRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -194,6 +231,8 @@ export interface FileRouteTypes {
     | '/'
     | '/$slug'
     | '/admin'
+    | '/cart'
+    | '/checkout'
     | '/infrastructure'
     | '/login'
     | '/services'
@@ -202,6 +241,7 @@ export interface FileRouteTypes {
     | '/admin/home-builder'
     | '/admin/media'
     | '/admin/menus'
+    | '/admin/orders'
     | '/admin/pages'
     | '/admin/posts'
     | '/admin/users'
@@ -210,10 +250,13 @@ export interface FileRouteTypes {
     | '/blog/'
     | '/admin/pages/$id'
     | '/admin/posts/$id'
+    | '/checkout/success/$orderNumber'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/$slug'
+    | '/cart'
+    | '/checkout'
     | '/infrastructure'
     | '/login'
     | '/services'
@@ -222,6 +265,7 @@ export interface FileRouteTypes {
     | '/admin/home-builder'
     | '/admin/media'
     | '/admin/menus'
+    | '/admin/orders'
     | '/admin/pages'
     | '/admin/posts'
     | '/admin/users'
@@ -230,11 +274,14 @@ export interface FileRouteTypes {
     | '/blog'
     | '/admin/pages/$id'
     | '/admin/posts/$id'
+    | '/checkout/success/$orderNumber'
   id:
     | '__root__'
     | '/'
     | '/$slug'
     | '/admin'
+    | '/cart'
+    | '/checkout'
     | '/infrastructure'
     | '/login'
     | '/services'
@@ -243,6 +290,7 @@ export interface FileRouteTypes {
     | '/admin/home-builder'
     | '/admin/media'
     | '/admin/menus'
+    | '/admin/orders'
     | '/admin/pages'
     | '/admin/posts'
     | '/admin/users'
@@ -251,12 +299,15 @@ export interface FileRouteTypes {
     | '/blog/'
     | '/admin/pages/$id'
     | '/admin/posts/$id'
+    | '/checkout/success/$orderNumber'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SlugRoute: typeof SlugRoute
   AdminRoute: typeof AdminRouteWithChildren
+  CartRoute: typeof CartRoute
+  CheckoutRoute: typeof CheckoutRouteWithChildren
   InfrastructureRoute: typeof InfrastructureRoute
   LoginRoute: typeof LoginRoute
   ServicesRoute: typeof ServicesRoute
@@ -293,6 +344,20 @@ declare module '@tanstack/react-router' {
       path: '/infrastructure'
       fullPath: '/infrastructure'
       preLoaderRoute: typeof InfrastructureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cart': {
+      id: '/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof CartRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -358,6 +423,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPagesRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/orders': {
+      id: '/admin/orders'
+      path: '/orders'
+      fullPath: '/admin/orders'
+      preLoaderRoute: typeof AdminOrdersRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/menus': {
       id: '/admin/menus'
       path: '/menus'
@@ -385,6 +457,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/appearance'
       preLoaderRoute: typeof AdminAppearanceRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/checkout/success/$orderNumber': {
+      id: '/checkout/success/$orderNumber'
+      path: '/success/$orderNumber'
+      fullPath: '/checkout/success/$orderNumber'
+      preLoaderRoute: typeof CheckoutSuccessOrderNumberRouteImport
+      parentRoute: typeof CheckoutRoute
     }
     '/admin/posts/$id': {
       id: '/admin/posts/$id'
@@ -432,6 +511,7 @@ interface AdminRouteChildren {
   AdminHomeBuilderRoute: typeof AdminHomeBuilderRoute
   AdminMediaRoute: typeof AdminMediaRoute
   AdminMenusRoute: typeof AdminMenusRoute
+  AdminOrdersRoute: typeof AdminOrdersRoute
   AdminPagesRoute: typeof AdminPagesRouteWithChildren
   AdminPostsRoute: typeof AdminPostsRouteWithChildren
   AdminUsersRoute: typeof AdminUsersRoute
@@ -443,6 +523,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminHomeBuilderRoute: AdminHomeBuilderRoute,
   AdminMediaRoute: AdminMediaRoute,
   AdminMenusRoute: AdminMenusRoute,
+  AdminOrdersRoute: AdminOrdersRoute,
   AdminPagesRoute: AdminPagesRouteWithChildren,
   AdminPostsRoute: AdminPostsRouteWithChildren,
   AdminUsersRoute: AdminUsersRoute,
@@ -451,10 +532,24 @@ const AdminRouteChildren: AdminRouteChildren = {
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
+interface CheckoutRouteChildren {
+  CheckoutSuccessOrderNumberRoute: typeof CheckoutSuccessOrderNumberRoute
+}
+
+const CheckoutRouteChildren: CheckoutRouteChildren = {
+  CheckoutSuccessOrderNumberRoute: CheckoutSuccessOrderNumberRoute,
+}
+
+const CheckoutRouteWithChildren = CheckoutRoute._addFileChildren(
+  CheckoutRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SlugRoute: SlugRoute,
   AdminRoute: AdminRouteWithChildren,
+  CartRoute: CartRoute,
+  CheckoutRoute: CheckoutRouteWithChildren,
   InfrastructureRoute: InfrastructureRoute,
   LoginRoute: LoginRoute,
   ServicesRoute: ServicesRoute,
