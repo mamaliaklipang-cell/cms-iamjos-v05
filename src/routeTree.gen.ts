@@ -9,38 +9,246 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as SlugRouteImport } from './routes/$slug'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AdminPostsRouteImport } from './routes/admin.posts'
+import { Route as AdminPagesRouteImport } from './routes/admin.pages'
+import { Route as AdminMenusRouteImport } from './routes/admin.menus'
+import { Route as AdminMediaRouteImport } from './routes/admin.media'
+import { Route as AdminHomeBuilderRouteImport } from './routes/admin.home-builder'
+import { Route as AdminAppearanceRouteImport } from './routes/admin.appearance'
+import { Route as AdminPostsIdRouteImport } from './routes/admin.posts.$id'
+import { Route as AdminPagesIdRouteImport } from './routes/admin.pages.$id'
 
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SlugRoute = SlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPostsRoute = AdminPostsRouteImport.update({
+  id: '/posts',
+  path: '/posts',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPagesRoute = AdminPagesRouteImport.update({
+  id: '/pages',
+  path: '/pages',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminMenusRoute = AdminMenusRouteImport.update({
+  id: '/menus',
+  path: '/menus',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminMediaRoute = AdminMediaRouteImport.update({
+  id: '/media',
+  path: '/media',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminHomeBuilderRoute = AdminHomeBuilderRouteImport.update({
+  id: '/home-builder',
+  path: '/home-builder',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAppearanceRoute = AdminAppearanceRouteImport.update({
+  id: '/appearance',
+  path: '/appearance',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPostsIdRoute = AdminPostsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AdminPostsRoute,
+} as any)
+const AdminPagesIdRoute = AdminPagesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AdminPagesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$slug': typeof SlugRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/login': typeof LoginRoute
+  '/admin/appearance': typeof AdminAppearanceRoute
+  '/admin/home-builder': typeof AdminHomeBuilderRoute
+  '/admin/media': typeof AdminMediaRoute
+  '/admin/menus': typeof AdminMenusRoute
+  '/admin/pages': typeof AdminPagesRouteWithChildren
+  '/admin/posts': typeof AdminPostsRouteWithChildren
+  '/admin/users': typeof AdminUsersRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/admin/': typeof AdminIndexRoute
+  '/blog/': typeof BlogIndexRoute
+  '/admin/pages/$id': typeof AdminPagesIdRoute
+  '/admin/posts/$id': typeof AdminPostsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$slug': typeof SlugRoute
+  '/login': typeof LoginRoute
+  '/admin/appearance': typeof AdminAppearanceRoute
+  '/admin/home-builder': typeof AdminHomeBuilderRoute
+  '/admin/media': typeof AdminMediaRoute
+  '/admin/menus': typeof AdminMenusRoute
+  '/admin/pages': typeof AdminPagesRouteWithChildren
+  '/admin/posts': typeof AdminPostsRouteWithChildren
+  '/admin/users': typeof AdminUsersRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/admin': typeof AdminIndexRoute
+  '/blog': typeof BlogIndexRoute
+  '/admin/pages/$id': typeof AdminPagesIdRoute
+  '/admin/posts/$id': typeof AdminPostsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$slug': typeof SlugRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/login': typeof LoginRoute
+  '/admin/appearance': typeof AdminAppearanceRoute
+  '/admin/home-builder': typeof AdminHomeBuilderRoute
+  '/admin/media': typeof AdminMediaRoute
+  '/admin/menus': typeof AdminMenusRoute
+  '/admin/pages': typeof AdminPagesRouteWithChildren
+  '/admin/posts': typeof AdminPostsRouteWithChildren
+  '/admin/users': typeof AdminUsersRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/admin/': typeof AdminIndexRoute
+  '/blog/': typeof BlogIndexRoute
+  '/admin/pages/$id': typeof AdminPagesIdRoute
+  '/admin/posts/$id': typeof AdminPostsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/$slug'
+    | '/admin'
+    | '/login'
+    | '/admin/appearance'
+    | '/admin/home-builder'
+    | '/admin/media'
+    | '/admin/menus'
+    | '/admin/pages'
+    | '/admin/posts'
+    | '/admin/users'
+    | '/blog/$slug'
+    | '/admin/'
+    | '/blog/'
+    | '/admin/pages/$id'
+    | '/admin/posts/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/$slug'
+    | '/login'
+    | '/admin/appearance'
+    | '/admin/home-builder'
+    | '/admin/media'
+    | '/admin/menus'
+    | '/admin/pages'
+    | '/admin/posts'
+    | '/admin/users'
+    | '/blog/$slug'
+    | '/admin'
+    | '/blog'
+    | '/admin/pages/$id'
+    | '/admin/posts/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/$slug'
+    | '/admin'
+    | '/login'
+    | '/admin/appearance'
+    | '/admin/home-builder'
+    | '/admin/media'
+    | '/admin/menus'
+    | '/admin/pages'
+    | '/admin/posts'
+    | '/admin/users'
+    | '/blog/$slug'
+    | '/admin/'
+    | '/blog/'
+    | '/admin/pages/$id'
+    | '/admin/posts/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SlugRoute: typeof SlugRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  BlogSlugRoute: typeof BlogSlugRoute
+  BlogIndexRoute: typeof BlogIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$slug': {
+      id: '/$slug'
+      path: '/$slug'
+      fullPath: '/$slug'
+      preLoaderRoute: typeof SlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +256,149 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/posts': {
+      id: '/admin/posts'
+      path: '/posts'
+      fullPath: '/admin/posts'
+      preLoaderRoute: typeof AdminPostsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/pages': {
+      id: '/admin/pages'
+      path: '/pages'
+      fullPath: '/admin/pages'
+      preLoaderRoute: typeof AdminPagesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/menus': {
+      id: '/admin/menus'
+      path: '/menus'
+      fullPath: '/admin/menus'
+      preLoaderRoute: typeof AdminMenusRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/media': {
+      id: '/admin/media'
+      path: '/media'
+      fullPath: '/admin/media'
+      preLoaderRoute: typeof AdminMediaRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/home-builder': {
+      id: '/admin/home-builder'
+      path: '/home-builder'
+      fullPath: '/admin/home-builder'
+      preLoaderRoute: typeof AdminHomeBuilderRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/appearance': {
+      id: '/admin/appearance'
+      path: '/appearance'
+      fullPath: '/admin/appearance'
+      preLoaderRoute: typeof AdminAppearanceRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/posts/$id': {
+      id: '/admin/posts/$id'
+      path: '/$id'
+      fullPath: '/admin/posts/$id'
+      preLoaderRoute: typeof AdminPostsIdRouteImport
+      parentRoute: typeof AdminPostsRoute
+    }
+    '/admin/pages/$id': {
+      id: '/admin/pages/$id'
+      path: '/$id'
+      fullPath: '/admin/pages/$id'
+      preLoaderRoute: typeof AdminPagesIdRouteImport
+      parentRoute: typeof AdminPagesRoute
+    }
   }
 }
 
+interface AdminPagesRouteChildren {
+  AdminPagesIdRoute: typeof AdminPagesIdRoute
+}
+
+const AdminPagesRouteChildren: AdminPagesRouteChildren = {
+  AdminPagesIdRoute: AdminPagesIdRoute,
+}
+
+const AdminPagesRouteWithChildren = AdminPagesRoute._addFileChildren(
+  AdminPagesRouteChildren,
+)
+
+interface AdminPostsRouteChildren {
+  AdminPostsIdRoute: typeof AdminPostsIdRoute
+}
+
+const AdminPostsRouteChildren: AdminPostsRouteChildren = {
+  AdminPostsIdRoute: AdminPostsIdRoute,
+}
+
+const AdminPostsRouteWithChildren = AdminPostsRoute._addFileChildren(
+  AdminPostsRouteChildren,
+)
+
+interface AdminRouteChildren {
+  AdminAppearanceRoute: typeof AdminAppearanceRoute
+  AdminHomeBuilderRoute: typeof AdminHomeBuilderRoute
+  AdminMediaRoute: typeof AdminMediaRoute
+  AdminMenusRoute: typeof AdminMenusRoute
+  AdminPagesRoute: typeof AdminPagesRouteWithChildren
+  AdminPostsRoute: typeof AdminPostsRouteWithChildren
+  AdminUsersRoute: typeof AdminUsersRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminAppearanceRoute: AdminAppearanceRoute,
+  AdminHomeBuilderRoute: AdminHomeBuilderRoute,
+  AdminMediaRoute: AdminMediaRoute,
+  AdminMenusRoute: AdminMenusRoute,
+  AdminPagesRoute: AdminPagesRouteWithChildren,
+  AdminPostsRoute: AdminPostsRouteWithChildren,
+  AdminUsersRoute: AdminUsersRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SlugRoute: SlugRoute,
+  AdminRoute: AdminRouteWithChildren,
+  LoginRoute: LoginRoute,
+  BlogSlugRoute: BlogSlugRoute,
+  BlogIndexRoute: BlogIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

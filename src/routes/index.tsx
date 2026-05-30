@@ -1,29 +1,32 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { getSiteSettings, getMenu, getHomeSections, listPublishedPosts } from "@/lib/cms/public.functions";
+import { SiteHeader, SiteFooter } from "@/components/site/site-chrome";
+import { SectionRenderer } from "@/components/site/sections";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
-    ],
-  }),
-  component: Index,
+  loader: async () => {
+    const [settings, header, footer, sections, posts] = await Promise.all([
+      getSiteSettings(),
+      getMenu({ data: { location: "header" } }),
+      getMenu({ data: { location: "footer" } }),
+      getHomeSections(),
+      listPublishedPosts({ data: { limit: 6 } }),
+    ]);
+    return { settings, header, footer, sections, posts };
+  },
+  component: Home,
+  errorComponent: ({ error }) => <div className="p-12 text-center text-destructive">{error.message}</div>,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function Home() {
+  const { settings, header, footer, sections, posts } = Route.useLoaderData();
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen">
+      <SiteHeader siteName={settings?.site_name ?? "CMS"} logoUrl={settings?.logo_url} items={header.items} />
+      <main>
+        <SectionRenderer sections={sections} heroDefault={settings?.hero_default ?? {}} posts={posts} />
+      </main>
+      <SiteFooter items={footer.items} footerHtml={settings?.footer_html} />
     </div>
   );
 }
